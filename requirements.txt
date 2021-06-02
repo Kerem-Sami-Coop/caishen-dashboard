@@ -1,3 +1,4 @@
+git+git://github.com/Kerem-Sami-Coop/caishen_stonks
 flake8==3.9.0
 pytest==6.2.2
 requests-mock==1.8.0
