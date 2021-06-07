@@ -1,9 +1,9 @@
 import dash_html_components as html
 from dash_core_components import Graph
 from dash.dependencies import Input, Output, State
-from caishen_dashboard.dashboard.server import app
+from caishen_dashboard.server import app
 from dash.exceptions import PreventUpdate
-from caishen_stonk.technical_indicators import bollinger_bands
+from caishen_stonks.technical_indicators import bollinger_bands
 import colorlover as cl
 from itertools import compress
 
