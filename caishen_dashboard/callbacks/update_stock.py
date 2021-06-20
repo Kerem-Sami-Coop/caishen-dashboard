@@ -41,9 +41,10 @@ def update_graph(tickers, data):
                 "increasing": {"line": {"color": COLORSCALE[0]}},
                 "decreasing": {"line": {"color": COLORSCALE[1]}}
             }
-            bb_bands = bollinger_bands(data["Close"])
+            bb_bands = bollinger_bands(list(compress(data["Close"], mask)))
             bollinger_traces = [{
-                "x": data["Date"], "y": y,
+                "x": list(compress(data["Date"], mask)),
+                "y": y,
                 "type": "scatter", "mode": "lines",
                 "line": {"width": 1, "color": COLORSCALE[(i * 2) % len(COLORSCALE)]},
                 "hoverinfo": "none",
