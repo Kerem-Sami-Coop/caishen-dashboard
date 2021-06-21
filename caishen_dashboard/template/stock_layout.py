@@ -19,7 +19,7 @@ def title_style(title, margin_top="20px", margin_bottom="0"):
 
 def graph_layout(df, target_column, dropdown_defaults=["YHOO", "GOOGL"]):
     layout = html.Div([
-        Store(id="df-store", data={key: df[key].values.tolist() for key in df.columns}),
+        Store(id="df-store", data=df.to_dict("records")),
         html.Div([
             title_style("Finance Explorer")
         ]),
