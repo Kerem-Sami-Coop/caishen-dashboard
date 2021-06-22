@@ -5,7 +5,7 @@ from caishen_dashboard.server import app
 from dash.exceptions import PreventUpdate
 from caishen_stonks.technical_indicators import bollinger_bands
 import colorlover as cl
-from itertools import compress
+import pandas as pd
 
 COLORSCALE = cl.scales["9"]["qual"]["Paired"]
 
@@ -25,25 +25,27 @@ def update_graph(tickers, data):
             style={"marginTop": 20, "marginBottom": 20}
         ))
     else:
+        df = pd.DataFrame(data)
         for i, ticker in enumerate(tickers):
-
-            mask = [x == ticker for x in data["Stock"]]
+            subset = df[df["Stock"] == ticker].sort_values(by="Date")
 
             candlestick = {
-                "x": list(compress(data["Date"], mask)),
-                "open": list(compress(data["Open"], mask)),
-                "high": list(compress(data["High"], mask)),
-                "low": list(compress(data["Low"], mask)),
-                "close": list(compress(data["Close"], mask)),
+                "x": subset["Date"].values,
+                "open": subset["Open"].values,
+                "high": subset["High"].values,
+                "low": subset["Low"].values,
+                "close": subset["Close"].values,
                 "type": "candlestick",
                 "name": ticker,
                 "legendgroup": ticker,
                 "increasing": {"line": {"color": COLORSCALE[0]}},
                 "decreasing": {"line": {"color": COLORSCALE[1]}}
             }
-            bb_bands = bollinger_bands(data["Close"])
+            bb_bands = bollinger_bands(subset["Close"].values)
+            exclude = bb_bands[0].count(-1)
             bollinger_traces = [{
-                "x": data["Date"], "y": y,
+                "x": subset["Date"].values[exclude:],
+                "y": y[exclude:],
                 "type": "scatter", "mode": "lines",
                 "line": {"width": 1, "color": COLORSCALE[(i * 2) % len(COLORSCALE)]},
                 "hoverinfo": "none",

@@ -11,3 +11,4 @@ COPY run_dashboard.py /app/
 EXPOSE 8050
 
 ENTRYPOINT ["python", "run_dashboard.py"]
+#CMD [ "gunicorn", "--workers=1", "--threads=1", "-b 0.0.0.0:8050", "caishen_dashboard.server:server"]
