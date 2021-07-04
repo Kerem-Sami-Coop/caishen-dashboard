@@ -11,10 +11,10 @@ URL_BASE = f"/{APP_ID}/"
 MIN_HEIGHT = 200
 
 
-def _protect_dashviews(dashapp):
-    for view_func in dashapp.server.view_functions:
-        if view_func.startswith(dashapp.config.url_base_pathname):
-            dashapp.server.view_functions[view_func] = login_required(dashapp.server.view_functions[view_func])
+# def _protect_dashviews(dashapp):
+#     for view_func in dashapp.server.view_functions:
+#         if view_func.startswith(dashapp.config.url_base_pathname):
+#             dashapp.server.view_functions[view_func] = login_required(dashapp.server.view_functions[view_func])
 
 
 def add_dash(server, protect=True):
@@ -40,7 +40,7 @@ def add_dash(server, protect=True):
 
     register_callback(app)
 
-    if protect:
-        _protect_dashviews(app)
+    # if protect:
+    #     _protect_dashviews(app)
 
     return server
